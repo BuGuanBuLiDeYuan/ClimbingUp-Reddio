@@ -62,7 +62,6 @@ const CONTRACT_ABI = [
 export const useContract = () => {
     const [currentHeight, setCurrentHeight] = useState<number>(0);
     const [contract, setContract] = useState<ethers.Contract | null>(null);
-    const [signer, setSigner] = useState<ethers.Signer | null>(null);
     const [account, setAccount] = useState<string | null>(null);
 
     // Initialize contract
@@ -83,7 +82,6 @@ export const useContract = () => {
                         );
 
                         setContract(contractInstance);
-                        setSigner(signer);
                         setAccount(accounts[0]);
 
                         // Get current height
@@ -174,8 +172,6 @@ export const useContract = () => {
         }
     }, [contract]);
 
-
-
     // Decrease height
     const decreaseHeight = useCallback(async (meters: number) => {
         if (!contract) {
@@ -197,11 +193,71 @@ export const useContract = () => {
         }
     }, [contract]);
 
+    // Connect wallet function
+    const connectWallet = useCallback(async () => {
+        if (typeof window === 'undefined' || !window.ethereum) {
+            alert("Please install MetaMask or another compatible wallet!");
+            return;
+        }
+
+        try {
+            const provider = new ethers.providers.Web3Provider(window.ethereum as any);
+            await provider.send("eth_requestAccounts", []);
+            const signer = provider.getSigner();
+            const address = await signer.getAddress();
+            setAccount(address);
+
+            // Check and switch to Monad Testnet
+            try {
+                await window.ethereum.request({
+                    method: 'wallet_switchEthereumChain',
+                    params: [{ chainId: '0x279F' }], // 10143 in hex
+                });
+            } catch (switchError: any) {
+                // If the network doesn't exist, add it
+                if (switchError.code === 4902) {
+                    await window.ethereum.request({
+                        method: 'wallet_addEthereumChain',
+                        params: [
+                            {
+                                chainId: '0x279F', // 10143 in hex
+                                chainName: 'Monad Testnet',
+                                nativeCurrency: {
+                                    name: 'MONAD',
+                                    symbol: 'MON',
+                                    decimals: 18,
+                                },
+                                rpcUrls: ['https://testnet-rpc.monad.xyz/'],
+                                blockExplorerUrls: ['https://testnet.monadexplorer.com/'],
+                            },
+                        ],
+                    });
+                }
+            }
+
+            // Initialize contract with signer
+            const contractWithSigner = new ethers.Contract(
+                CONTRACT_ADDRESS,
+                CONTRACT_ABI,
+                signer
+            );
+            setContract(contractWithSigner);
+
+            // Get current height
+            const height = await contractWithSigner.currentHeight();
+            setCurrentHeight(height.toNumber());
+
+        } catch (error) {
+            console.error("Failed to connect wallet:", error);
+        }
+    }, []);
+
     return {
         currentHeight,
         increaseHeight,
-        increaseHeightMultiple, // Add the new function to the return object
+        increaseHeightMultiple,
         decreaseHeight,
-        account
+        account,
+        connectWallet
     };
 };

@@ -6,29 +6,75 @@ const WalletConnectContainer = styled.div`
   position: absolute;
   top: 20px;
   right: 20px;
-  z-index: 10;
+  z-index: 20;
+  
+  @media (max-width: 768px) {
+    top: 15px;
+    right: 15px;
+  }
+  
+  @media (max-width: 480px) {
+    position: relative;
+    top: 0;
+    right: 0;
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 10px;
+  }
 `;
 
 const WalletButton = styled.button`
-  background-color: #3498db;
+  background-color: rgba(52, 152, 219, 0.8);
   color: white;
   border: none;
   padding: 10px 20px;
-  border-radius: 5px;
+  border-radius: 50px;
   cursor: pointer;
   font-weight: bold;
+  backdrop-filter: blur(5px);
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
   
   &:hover {
-    background-color: #2980b9;
+    background-color: rgba(41, 128, 185, 0.9);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+  }
+  
+  &:active {
+    transform: translateY(1px);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  }
+  
+  @media (max-width: 768px) {
+    padding: 8px 16px;
+    font-size: 0.9rem;
+  }
+  
+  @media (max-width: 480px) {
+    padding: 6px 12px;
+    font-size: 0.8rem;
   }
 `;
 
 const WalletAddress = styled.div`
-  background-color: rgba(0, 0, 0, 0.2);
+  background-color: rgba(0, 0, 0, 0.3);
   color: white;
   padding: 10px;
-  border-radius: 5px;
+  border-radius: 50px;
   font-family: monospace;
+  backdrop-filter: blur(5px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  
+  @media (max-width: 768px) {
+    padding: 8px;
+    font-size: 0.9rem;
+  }
+  
+  @media (max-width: 480px) {
+    padding: 6px;
+    font-size: 0.8rem;
+  }
 `;
 
 const WalletConnect: React.FC = () => {

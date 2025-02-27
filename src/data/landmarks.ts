@@ -10,61 +10,61 @@ export const landmarks: Landmark[] = [
     {
         height: 0,
         name: "Sea Level",
-        description: "Global average sea level",
+        description: "The average surface level of Earth's oceans",
         category: "Natural",
     },
     {
         height: 124,
         name: "Statue of Liberty",
-        description: "New York, USA",
+        description: "The height of the Statue of Liberty in New York, USA",
         category: "Building",
     },
     {
         height: 324,
         name: "Eiffel Tower",
-        description: "Paris, France",
+        description: "The top of the Eiffel Tower in Paris, France",
         category: "Building",
     },
     {
         height: 452,
-        name: "Petronas Towers",
-        description: "Kuala Lumpur, Malaysia",
+        name: "Petronas Twin Towers",
+        description: "The top of the Petronas Twin Towers in Kuala Lumpur, Malaysia",
         category: "Building",
     },
     {
         height: 828,
         name: "Burj Khalifa",
-        description: "Dubai, UAE",
+        description: "The tallest building in the world, located in Dubai, UAE",
         category: "Building",
     },
     {
         height: 1000,
-        name: "Paragliding Height",
-        description: "Typical paragliding altitude",
+        name: "Typical Paragliding Height",
+        description: "A common altitude for paragliding activities",
         category: "Aviation",
     },
     {
         height: 3000,
-        name: "Average Cloud Level",
-        description: "Typical cumulus cloud base",
+        name: "Average Cloud Layer",
+        description: "The typical height of cumulus clouds",
         category: "Natural",
     },
     {
         height: 8848,
         name: "Mount Everest",
-        description: "Nepal/China border",
+        description: "The highest point on Earth, located in Nepal/China",
         category: "Natural",
     },
     {
         height: 10000,
-        name: "Commercial Flight Level",
-        description: "Typical cruising altitude",
+        name: "Commercial Aircraft Cruising Altitude",
+        description: "The typical cruising altitude for passenger jets",
         category: "Aviation",
     },
     {
         height: 35786,
         name: "Geostationary Orbit",
-        description: "Communications satellites",
+        description: "The altitude where satellites appear stationary relative to Earth",
         category: "Space",
     },
 ];
@@ -78,3 +78,5 @@ export const getNearestLandmark = (height: number): Landmark => {
         return Math.abs(curr.height - height) < Math.abs(prev.height - height) ? curr : prev;
     });
 };
+
+export default landmarks;

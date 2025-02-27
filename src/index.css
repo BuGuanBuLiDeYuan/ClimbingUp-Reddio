@@ -5,9 +5,30 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* Add viewport meta tag in public/index.html if not already present */
+/* <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"> */
+
+/* Prevent pull-to-refresh on mobile */
+html,
+body {
+  overscroll-behavior-y: contain;
+  height: 100%;
+}
+
+/* Improve touch interactions */
+button,
+a {
+  touch-action: manipulation;
 }
