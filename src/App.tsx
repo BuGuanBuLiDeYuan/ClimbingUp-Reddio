@@ -8,8 +8,9 @@ import Controls from './components/Controls';
 import WalletConnect from './components/WalletConnect';
 import Background from './components/Background';
 import Welcome from './components/Welcome';
-import { useContract } from './hooks/useContract';
 import Preload from './components/Preload';
+import Footer from './components/Footer';
+import { useContract } from './hooks/useContract';
 
 const AppContainer = styled.div`
   min-height: 100vh;
@@ -80,6 +81,8 @@ const App: React.FC = () => {
         <BottomSection>
           <Controls />
         </BottomSection>
+
+        <Footer />
       </ContentContainer>
     </AppContainer>
   );
