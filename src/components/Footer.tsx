@@ -48,7 +48,7 @@ const Footer: React.FC = () => {
     return (
         <FooterContainer>
             <FooterContent>
-                <div>© 2025 ClimbingUp@Monad. Created by LongLongLongBTC</div>
+                <div>© 2025 ClimbingUp@Reddio. Created by LongLongLongBTC</div>
                 <SocialLinks>
                     <SocialLink href="https://x.com/LongLongLongBTC" target="_blank" rel="noopener noreferrer">
                         Twitter

@@ -176,8 +176,8 @@ const Welcome: React.FC<WelcomeProps> = ({ connectWallet, onClose }) => {
       <CloseButton onClick={handleClose}>×</CloseButton>
       <Title>Join the Climbing Adventure!</Title>
       <Description>
-        Welcome to ClimbingUp@Monad, where the sky is not the limit! This is a
-        collaborative experiment on the Monad Testnet where everyone can
+        Welcome to ClimbingUp@Reddio, where the sky is not the limit! This is a
+        collaborative experiment on the Reddio Testnet where everyone can
         contribute to reaching new heights together.
       </Description>
 
@@ -185,7 +185,7 @@ const Welcome: React.FC<WelcomeProps> = ({ connectWallet, onClose }) => {
         <Feature>🧗‍♀️ Climb 10 meters with each transaction</Feature>
         <Feature>🏔️ Pass famous landmarks as we ascend together</Feature>
         <Feature>🌐 Be part of a global community effort</Feature>
-        <Feature>🚀 Explore the capabilities of Monad's fast blockchain</Feature>
+        <Feature>🚀 Explore the capabilities of Reddio's fast blockchain</Feature>
       </FeatureList>
 
       <Description>

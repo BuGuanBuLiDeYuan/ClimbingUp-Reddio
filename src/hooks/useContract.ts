@@ -2,7 +2,7 @@ import { useEffect, useState, useCallback } from 'react';
 import { ethers } from 'ethers';
 
 // Contract address and ABI
-const CONTRACT_ADDRESS = '0xCc3D91373f7e2202DD0B6AdBE0F5083A381391f8';
+const CONTRACT_ADDRESS = '0xb64aF93aeb87BA9d3642B9117559a6a21c2409c8';
 const CONTRACT_ABI = [
     {
         "inputs": [],
@@ -196,7 +196,7 @@ export const useContract = () => {
     // Connect wallet function
     const connectWallet = useCallback(async () => {
         if (typeof window === 'undefined' || !window.ethereum) {
-            alert("Please install MetaMask or another compatible wallet!");
+            alert("请安装MetaMask或其他兼容的钱包！");
             return;
         }
 
@@ -207,35 +207,35 @@ export const useContract = () => {
             const address = await signer.getAddress();
             setAccount(address);
 
-            // Check and switch to Monad Testnet
+            // 检查并切换到Reddio Devnet
             try {
                 await window.ethereum.request({
                     method: 'wallet_switchEthereumChain',
-                    params: [{ chainId: '0x279F' }], // 10143 in hex
+                    params: [{ chainId: '0xC4A5' }], // 50341 in hex
                 });
             } catch (switchError: any) {
-                // If the network doesn't exist, add it
+                // 如果网络不存在，添加它
                 if (switchError.code === 4902) {
                     await window.ethereum.request({
                         method: 'wallet_addEthereumChain',
                         params: [
                             {
-                                chainId: '0x279F', // 10143 in hex
-                                chainName: 'Monad Testnet',
+                                chainId: '0xC4A5', // 50341 in hex
+                                chainName: 'Reddio Devnet',
                                 nativeCurrency: {
-                                    name: 'MONAD',
-                                    symbol: 'MON',
+                                    name: 'RED',
+                                    symbol: 'RED',
                                     decimals: 18,
                                 },
-                                rpcUrls: ['https://testnet-rpc.monad.xyz/'],
-                                blockExplorerUrls: ['https://testnet.monadexplorer.com/'],
+                                rpcUrls: ['https://reddio-dev.reddio.com'],
+                                blockExplorerUrls: ['https://reddio-devnet.l2scan.co'],
                             },
                         ],
                     });
                 }
             }
 
-            // Initialize contract with signer
+            // 初始化合约
             const contractWithSigner = new ethers.Contract(
                 CONTRACT_ADDRESS,
                 CONTRACT_ABI,
@@ -243,12 +243,11 @@ export const useContract = () => {
             );
             setContract(contractWithSigner);
 
-            // Get current height
+            // 获取当前高度
             const height = await contractWithSigner.currentHeight();
             setCurrentHeight(height.toNumber());
-
         } catch (error) {
-            console.error("Failed to connect wallet:", error);
+            console.error("连接钱包失败:", error);
         }
     }, []);
 

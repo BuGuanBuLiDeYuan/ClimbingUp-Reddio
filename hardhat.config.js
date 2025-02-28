@@ -22,10 +22,10 @@ try {
 module.exports = {
     solidity: "0.8.20",
     networks: {
-        monad_testnet: {
-            url: "https://testnet-rpc.monad.xyz/",
+        reddio_devnet: {
+            url: "https://reddio-dev.reddio.com",
             accounts: [privateKey || process.env.PRIVATE_KEY || ""],
-            chainId: 10143,
+            chainId: 50341,
         }
     },
     paths: {

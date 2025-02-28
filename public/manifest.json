@@ -1,7 +1,7 @@
 {
   "short_name": "ClimbingUp",
-  "name": "ClimbingUp@Monad",
-  "description": "A collaborative climbing experiment on the Monad Testnet",
+  "name": "ClimbingUp@Reddio",
+  "description": "A collaborative climbing experiment on the Reddio Testnet",
   "icons": [
     {
       "src": "favicon.ico",

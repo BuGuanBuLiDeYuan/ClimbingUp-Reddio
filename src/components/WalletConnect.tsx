@@ -60,7 +60,6 @@ const DisconnectButton = styled.button`
 const WalletConnect: React.FC = () => {
     const { account, connectWallet } = useContract();
 
-    // 截断地址显示
     const shortenAddress = (address: string) => {
         return `${address.substring(0, 6)}...${address.substring(address.length - 4)}`;
     };

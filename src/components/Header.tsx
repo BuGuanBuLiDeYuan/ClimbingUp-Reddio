@@ -51,8 +51,8 @@ const Subtitle = styled.p`
 const Header: React.FC = () => {
   return (
     <HeaderContainer>
-      <Title>ClimbingUp@Monad</Title>
-      <Subtitle>Climb to new heights on the Monad Testnet!</Subtitle>
+      <Title>ClimbingUp@Reddio</Title>
+      <Subtitle>Climb to new heights on the Reddio Testnet!</Subtitle>
     </HeaderContainer>
   );
 };

@@ -1,7 +1,6 @@
 import React from 'react';
 import styled, { keyframes } from 'styled-components';
 
-// 攀登动画
 const climb = keyframes`
   0% {
     transform: translateY(0);
@@ -14,7 +13,6 @@ const climb = keyframes`
   }
 `;
 
-// 攀登者容器
 const ClimberContainer = styled.div`
   position: absolute;
   bottom: 35%;
@@ -44,7 +42,6 @@ const Climber = styled.div<{ isClimbing: boolean }>`
   animation: ${props => props.isClimbing ? climb : 'none'} 0.5s ease-in-out;
 `;
 
-// 修改背景容器，确保完整显示
 const MountainContainer = styled.div`
   position: absolute;
   top: 0;

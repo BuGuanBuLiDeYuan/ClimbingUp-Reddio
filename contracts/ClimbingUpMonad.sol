@@ -31,7 +31,7 @@ contract ClimbingUpMonad {
 
 
     function decreaseHeight(uint256 meters) external payable {
-        require(msg.value >= (0.1 ether * meters / 10), "Insufficient MON");
+        require(msg.value >= (0.1 ether * meters / 10), "Insufficient RED");
         require(currentHeight >= meters, "Cannot decrease below zero");
         currentHeight -= meters;
         

@@ -38,8 +38,8 @@ async function main() {
 
     try {
         // 创建 provider
-        const provider = new ethers.providers.JsonRpcProvider("https://testnet-rpc.monad.xyz/");
-        console.log("已连接到 Monad 测试网");
+        const provider = new ethers.providers.JsonRpcProvider("https://reddio-dev.reddio.com");
+        console.log("已连接到 Reddio Devnet");
 
         // 创建钱包
         const wallet = new ethers.Wallet(privateKey, provider);

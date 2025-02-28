@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styled, { keyframes } from 'styled-components';
 
-// 撒花动画
 const confettiFall = keyframes`
   0% {
     transform: translateY(-100vh) rotate(0deg);
@@ -36,7 +35,6 @@ const Confetti = styled.div<{ color: string; left: string; delay: string; size: 
   animation-delay: ${props => props.delay};
 `;
 
-// 欢呼文字动画
 const cheerFade = keyframes`
   0% {
     transform: scale(0.5);
@@ -82,7 +80,6 @@ const Celebration: React.FC<CelebrationProps> = ({ show, onComplete }) => {
 
     useEffect(() => {
         if (show) {
-            // 生成随机撒花
             const newConfetti = [];
             for (let i = 0; i < 50; i++) {
                 const color = colors[Math.floor(Math.random() * colors.length)];
@@ -102,10 +99,8 @@ const Celebration: React.FC<CelebrationProps> = ({ show, onComplete }) => {
             }
             setConfetti(newConfetti);
 
-            // 随机选择欢呼文字
             setCheer(cheers[Math.floor(Math.random() * cheers.length)]);
 
-            // 动画结束后清理
             const timer = setTimeout(() => {
                 setConfetti([]);
                 setCheer('');
