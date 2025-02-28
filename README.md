@@ -1,70 +1,142 @@
-# Getting Started with Create React App
+# ClimbingUp@Reddio
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A collaborative climbing experiment on the Reddio Devnet blockchain.
 
-## Available Scripts
+![ClimbingUp Banner](./public/og-image.png)
 
-In the project directory, you can run:
+## Overview
 
-### `npm start`
+ClimbingUp@Reddio is an interactive blockchain experiment where users collectively climb to reach new heights together. Each transaction contributes to our global climbing effort, with the goal of passing famous landmarks and reaching unprecedented altitudes.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+Built on the Reddio Devnet, this project demonstrates the capabilities of fast blockchain transactions while creating a fun, collaborative experience.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Features
 
-### `npm test`
+- **Collaborative Climbing**: Every user contributes to a shared global height
+- **Landmark Achievements**: Pass famous global landmarks as the height increases
+- **Blockchain Powered**: All climbing actions are recorded on the Reddio blockchain
+- **Interactive Visualization**: Watch your climber ascend in real-time
+- **Contribution Tracking**: See your personal contribution to the global effort
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## How to Play
 
-### `npm run build`
+1. **Connect Your Wallet**:
+   - Install MetaMask or another compatible Ethereum wallet
+   - Connect to the Reddio Devnet (Chain ID: 50341)
+   - Make sure you have some RED test tokens
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+2. **Climb Up**:
+   - Click the "Climb" button to increase the global height by 10 meters
+   - Each climb is recorded as a transaction on the blockchain
+   - Watch as your climber ascends and the background changes
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+3. **Descend (Optional)**:
+   - Click the "Descend" button to decrease the height
+   - This requires a small amount of RED tokens (0.1 RED per 10 meters)
+   - Descending can be strategic to reach specific landmark heights
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Getting Started
 
-### `npm run eject`
+### Connecting to Reddio Devnet
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+To interact with ClimbingUp@Reddio, you'll need to add the Reddio Devnet to your wallet:
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+- **Network Name**: Reddio Devnet
+- **RPC URL**: https://reddio-dev.reddio.com
+- **Chain ID**: 50341
+- **Currency Symbol**: RED
+- **Block Explorer URL**: https://reddio-devnet.l2scan.co
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+### Getting Test Tokens
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+You'll need RED test tokens to perform certain actions:
 
-## Learn More
+1. Visit the [Reddio Devnet Faucet](https://testnet-faucet.reddio.com)
+2. Enter your wallet address
+3. Request test tokens
+4. Wait for the tokens to appear in your wallet
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## Landmarks
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+As we climb together, we'll pass various famous landmarks:
 
-### Code Splitting
+- **0m**: Global Mean Sea Level
+- **124m**: Statue of Liberty (USA)
+- **324m**: Eiffel Tower (France)
+- **452m**: Petronas Towers (Malaysia)
+- **828m**: Burj Khalifa (Dubai)
+- **1,000m**: Typical Paragliding Height
+- **3,000m**: Average Cloud Layer
+- **8,848m**: Mount Everest (Nepal/China)
+- **10,000m**: Commercial Aircraft Cruising Altitude
+- **35,786m**: Geostationary Orbit
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+## Technical Details
 
-### Analyzing the Bundle Size
+ClimbingUp@Reddio is built using:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+- **Frontend**: React, TypeScript, Styled Components
+- **Blockchain**: Solidity Smart Contracts on Reddio Devnet
+- **Interaction**: ethers.js for blockchain communication
 
-### Making a Progressive Web App
+The project demonstrates:
+- Smart contract interaction
+- Blockchain event listening
+- Web3 wallet integration
+- Collaborative blockchain applications
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+## Development
 
-### Advanced Configuration
+### Prerequisites
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+- Node.js (v14+)
+- npm or yarn
+- MetaMask or compatible wallet
 
-### Deployment
+### Local Setup
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+```bash
+# Clone the repository
+git clone https://github.com/BuGuanBuLiDeYuan/ClimbingUp-Reddio.git
 
-### `npm run build` fails to minify
+# Navigate to the project directory
+cd ClimbingUp-Reddio
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+# Install dependencies
+npm install
+
+# Start the development server
+npm start
+```
+
+### Smart Contract Deployment
+
+```bash
+# Compile contracts
+npx hardhat compile
+
+# Deploy to Reddio Devnet
+node scripts/deploy-direct.js
+```
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+## License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+## Contact
+
+Created by [@LongLongLongBTC](https://twitter.com/LongLongLongBTC) - feel free to contact me!
+
+---
+
+*ClimbingUp@Reddio is an experimental project and not affiliated with Reddio officially.*
