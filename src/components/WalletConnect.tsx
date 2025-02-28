@@ -1,30 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import styled from 'styled-components';
-import { ethers } from 'ethers';
+import { useContract } from '../hooks/useContract';
 
-const WalletConnectContainer = styled.div`
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  z-index: 20;
-  
-  @media (max-width: 768px) {
-    top: 15px;
-    right: 15px;
-  }
-  
-  @media (max-width: 480px) {
-    position: relative;
-    top: 0;
-    right: 0;
-    display: flex;
-    justify-content: flex-end;
-    margin-bottom: 10px;
-  }
+const WalletContainer = styled.div`
+  display: flex;
+  align-items: center;
 `;
 
 const WalletButton = styled.button`
-  background-color: rgba(52, 152, 219, 0.8);
+  background-color: rgba(255, 255, 255, 0.2);
   color: white;
   border: none;
   padding: 10px 20px;
@@ -36,155 +20,66 @@ const WalletButton = styled.button`
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
   
   &:hover {
-    background-color: rgba(41, 128, 185, 0.9);
+    background-color: rgba(255, 255, 255, 0.3);
     transform: translateY(-2px);
     box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
-  }
-  
-  &:active {
-    transform: translateY(1px);
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-  }
-  
-  @media (max-width: 768px) {
-    padding: 8px 16px;
-    font-size: 0.9rem;
-  }
-  
-  @media (max-width: 480px) {
-    padding: 6px 12px;
-    font-size: 0.8rem;
   }
 `;
 
 const WalletAddress = styled.div`
-  background-color: rgba(0, 0, 0, 0.3);
+  background-color: rgba(255, 255, 255, 0.1);
   color: white;
-  padding: 10px;
+  padding: 8px 15px;
   border-radius: 50px;
-  font-family: monospace;
+  font-size: 0.9rem;
+  margin-right: 10px;
   backdrop-filter: blur(5px);
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+`;
+
+const ConnectedContainer = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
+const DisconnectButton = styled.button`
+  background-color: rgba(255, 100, 100, 0.2);
+  color: white;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 50px;
+  cursor: pointer;
+  font-size: 0.8rem;
+  backdrop-filter: blur(5px);
+  transition: all 0.3s ease;
   
-  @media (max-width: 768px) {
-    padding: 8px;
-    font-size: 0.9rem;
-  }
-  
-  @media (max-width: 480px) {
-    padding: 6px;
-    font-size: 0.8rem;
+  &:hover {
+    background-color: rgba(255, 100, 100, 0.4);
   }
 `;
 
 const WalletConnect: React.FC = () => {
-    const [account, setAccount] = useState<string | null>(null);
-    const [isConnecting, setIsConnecting] = useState(false);
+    const { account, connectWallet } = useContract();
 
-    useEffect(() => {
-        // Check if already connected
-        const checkConnection = async () => {
-            if (typeof window !== 'undefined' && window.ethereum) {
-                try {
-                    const provider = new ethers.providers.Web3Provider(window.ethereum as any);
-                    const accounts = await provider.listAccounts();
-
-                    if (accounts.length > 0) {
-                        setAccount(accounts[0]);
-                    }
-
-                    // Listen for account changes
-                    window.ethereum.on('accountsChanged', (newAccounts: string[]) => {
-                        if (newAccounts.length > 0) {
-                            setAccount(newAccounts[0]);
-                        } else {
-                            setAccount(null);
-                        }
-                    });
-                } catch (error) {
-                    console.error("Failed to check connection:", error);
-                }
-            }
-        };
-
-        checkConnection();
-
-        // Cleanup function
-        return () => {
-            if (typeof window !== 'undefined' && window.ethereum) {
-                window.ethereum.removeAllListeners('accountsChanged');
-            }
-        };
-    }, []);
-
-    const connectWallet = async () => {
-        if (typeof window === 'undefined' || !window.ethereum) {
-            alert("Please install MetaMask or another compatible wallet!");
-            return;
-        }
-
-        setIsConnecting(true);
-
-        try {
-            const provider = new ethers.providers.Web3Provider(window.ethereum as any);
-            await provider.send("eth_requestAccounts", []);
-            const signer = provider.getSigner();
-            const address = await signer.getAddress();
-            setAccount(address);
-
-            // Check and switch to Monad Testnet
-            try {
-                await window.ethereum.request({
-                    method: 'wallet_switchEthereumChain',
-                    params: [{ chainId: '0x279F' }], // 10143 in hex
-                });
-            } catch (switchError: any) {
-                // If the network doesn't exist, add it
-                if (switchError.code === 4902) {
-                    await window.ethereum.request({
-                        method: 'wallet_addEthereumChain',
-                        params: [
-                            {
-                                chainId: '0x279F', // 10143 in hex
-                                chainName: 'Monad Testnet',
-                                nativeCurrency: {
-                                    name: 'MONAD',
-                                    symbol: 'MON',
-                                    decimals: 18,
-                                },
-                                rpcUrls: ['https://testnet-rpc.monad.xyz/'],
-                                blockExplorerUrls: ['https://testnet.monadexplorer.com/'],
-                            },
-                        ],
-                    });
-                }
-            }
-        } catch (error) {
-            console.error("Failed to connect wallet:", error);
-        } finally {
-            setIsConnecting(false);
-        }
-    };
-
-    const disconnectWallet = () => {
-        setAccount(null);
+    // 截断地址显示
+    const shortenAddress = (address: string) => {
+        return `${address.substring(0, 6)}...${address.substring(address.length - 4)}`;
     };
 
     return (
-        <WalletConnectContainer>
+        <WalletContainer>
             {account ? (
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', alignItems: 'flex-end' }}>
-                    <WalletAddress>
-                        {account.substring(0, 6)}...{account.substring(account.length - 4)}
-                    </WalletAddress>
-                    <WalletButton onClick={disconnectWallet}>Disconnect</WalletButton>
-                </div>
+                <ConnectedContainer>
+                    <WalletAddress>{shortenAddress(account)}</WalletAddress>
+                    <DisconnectButton onClick={() => window.location.reload()}>
+                        Disconnect
+                    </DisconnectButton>
+                </ConnectedContainer>
             ) : (
-                <WalletButton onClick={connectWallet} disabled={isConnecting}>
-                    {isConnecting ? 'Connecting...' : 'Connect Wallet'}
+                <WalletButton onClick={connectWallet}>
+                    Connect Wallet
                 </WalletButton>
             )}
-        </WalletConnectContainer>
+        </WalletContainer>
     );
 };
 

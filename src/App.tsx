@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import './App.css';
 
@@ -10,6 +10,8 @@ import Background from './components/Background';
 import Welcome from './components/Welcome';
 import Preload from './components/Preload';
 import Footer from './components/Footer';
+import ClimbingVisual from './components/ClimbingVisual';
+import Celebration from './components/Celebration';
 import { useContract } from './hooks/useContract';
 
 const AppContainer = styled.div`
@@ -41,11 +43,8 @@ const MiddleSection = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 20px 0;
-  
-  @media (max-width: 768px) {
-    padding: 10px 0;
-  }
+  width: 100%;
+  position: relative;
 `;
 
 const BottomSection = styled.div`
@@ -58,7 +57,39 @@ const BottomSection = styled.div`
 `;
 
 const App: React.FC = () => {
-  const { currentHeight, account } = useContract();
+  const { currentHeight, account, connectWallet } = useContract();
+  const [showWelcome, setShowWelcome] = useState(true);
+  const [isClimbing, setIsClimbing] = useState(false);
+  const [showCelebration, setShowCelebration] = useState(false);
+  const [prevHeight, setPrevHeight] = useState(0);
+
+  console.log("Current account:", account);
+
+  const handleCloseWelcome = () => {
+    setShowWelcome(false);
+  };
+
+  useEffect(() => {
+    if (currentHeight > prevHeight) {
+      setIsClimbing(true);
+
+      setTimeout(() => {
+        setIsClimbing(false);
+        setShowCelebration(true);
+      }, 500);
+    }
+
+    setPrevHeight(currentHeight);
+  }, [currentHeight]);
+
+  useEffect(() => {
+    console.log("Current height:", currentHeight);
+    console.log("Is climbing:", isClimbing);
+  }, [currentHeight, isClimbing]);
+
+  const handleCelebrationComplete = () => {
+    setShowCelebration(false);
+  };
 
   return (
     <AppContainer>
@@ -71,19 +102,33 @@ const App: React.FC = () => {
         </TopSection>
 
         <MiddleSection>
-          {account ? (
-            <HeightDisplay currentHeight={currentHeight} />
+          {account || !showWelcome ? (
+            <>
+              <ClimbingVisual
+                currentHeight={currentHeight}
+                isClimbing={isClimbing}
+              />
+              <HeightDisplay currentHeight={currentHeight} />
+            </>
           ) : (
-            <Welcome />
+            <Welcome
+              connectWallet={connectWallet}
+              onClose={handleCloseWelcome}
+            />
           )}
         </MiddleSection>
 
         <BottomSection>
-          <Controls />
+          {account && <Controls />}
         </BottomSection>
 
         <Footer />
       </ContentContainer>
+
+      <Celebration
+        show={showCelebration}
+        onComplete={handleCelebrationComplete}
+      />
     </AppContainer>
   );
 };

@@ -39,6 +39,7 @@ const WelcomeContainer = styled.div`
   width: 90%;
   margin: 0 auto;
   animation: ${fadeIn} 1s ease-out;
+  position: relative;
   
   @media (max-width: 768px) {
     padding: 30px;
@@ -48,6 +49,33 @@ const WelcomeContainer = styled.div`
   @media (max-width: 480px) {
     padding: 20px;
     width: 100%;
+  }
+`;
+
+const CloseButton = styled.button`
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: rgba(255, 255, 255, 0.3);
+  border: none;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  color: white;
+  font-size: 18px;
+  
+  &:hover {
+    background: rgba(255, 255, 255, 0.5);
+    transform: rotate(90deg);
+  }
+  
+  &:focus {
+    outline: none;
   }
 `;
 
@@ -131,34 +159,44 @@ const ConnectButton = styled.button`
   }
 `;
 
-const Welcome: React.FC = () => {
-    const { connectWallet } = useContract();
+interface WelcomeProps {
+  connectWallet: () => Promise<void>;
+  onClose?: () => void;
+}
 
-    return (
-        <WelcomeContainer>
-            <Title>Join the Climbing Adventure!</Title>
-            <Description>
-                Welcome to ClimbingUp@Monad, where the sky is not the limit!
-                This is a collaborative experiment on the Monad Testnet where everyone can
-                contribute to reaching new heights together.
-            </Description>
+const Welcome: React.FC<WelcomeProps> = ({ connectWallet, onClose }) => {
+  const handleClose = () => {
+    if (onClose) {
+      onClose();
+    }
+  };
 
-            <FeatureList>
-                <Feature>🧗‍♀️ Climb 10 meters with each transaction</Feature>
-                <Feature>🏔️ Pass famous landmarks as we ascend together</Feature>
-                <Feature>🌐 Be part of a global community effort</Feature>
-                <Feature>🚀 Explore the capabilities of Monad's fast blockchain</Feature>
-            </FeatureList>
+  return (
+    <WelcomeContainer>
+      <CloseButton onClick={handleClose}>×</CloseButton>
+      <Title>Join the Climbing Adventure!</Title>
+      <Description>
+        Welcome to ClimbingUp@Monad, where the sky is not the limit! This is a
+        collaborative experiment on the Monad Testnet where everyone can
+        contribute to reaching new heights together.
+      </Description>
 
-            <Description>
-                How high can we go? Connect your wallet and help us find out!
-            </Description>
+      <FeatureList>
+        <Feature>🧗‍♀️ Climb 10 meters with each transaction</Feature>
+        <Feature>🏔️ Pass famous landmarks as we ascend together</Feature>
+        <Feature>🌐 Be part of a global community effort</Feature>
+        <Feature>🚀 Explore the capabilities of Monad's fast blockchain</Feature>
+      </FeatureList>
 
-            <ConnectButton onClick={connectWallet}>
-                Connect Wallet to Start Climbing
-            </ConnectButton>
-        </WelcomeContainer>
-    );
+      <Description>
+        How high can we go? Connect your wallet and help us find out!
+      </Description>
+
+      <ConnectButton onClick={connectWallet}>
+        Connect Wallet to Start Climbing
+      </ConnectButton>
+    </WelcomeContainer>
+  );
 };
 
 export default Welcome; 
