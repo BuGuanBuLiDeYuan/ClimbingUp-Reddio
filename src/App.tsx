@@ -13,6 +13,7 @@ import Footer from './components/Footer';
 import ClimbingVisual from './components/ClimbingVisual';
 import Celebration from './components/Celebration';
 import { useContract } from './hooks/useContract';
+import NFTMintModal from './components/NFTMintModal';
 
 const AppContainer = styled.div`
   min-height: 100vh;
@@ -57,7 +58,7 @@ const BottomSection = styled.div`
 `;
 
 const App: React.FC = () => {
-  const { currentHeight, account, connectWallet } = useContract();
+  const { currentHeight, account, connectWallet, showMintModal, setShowMintModal, pendingNFTData } = useContract();
   const [showWelcome, setShowWelcome] = useState(true);
   const [isClimbing, setIsClimbing] = useState(false);
   const [showCelebration, setShowCelebration] = useState(false);
@@ -128,6 +129,12 @@ const App: React.FC = () => {
       <Celebration
         show={showCelebration}
         onComplete={handleCelebrationComplete}
+      />
+
+      <NFTMintModal
+        show={showMintModal}
+        onClose={() => setShowMintModal(false)}
+        nftData={pendingNFTData}
       />
     </AppContainer>
   );

@@ -60,13 +60,31 @@ async function main() {
         // 部署合约
         console.log("开始部署 ClimbingUpMonad...");
         const contract = await factory.deploy(feeReceiver);
-
-        // 等待部署完成
-        console.log("等待交易确认...");
         await contract.deployed();
-
         console.log("ClimbingUpMonad 已部署到:", contract.address);
-        console.log("接收地址设置为:", feeReceiver);
+
+        // 部署NFT合约
+        console.log("开始部署 ClimbingNFT...");
+        const nftFactory = new ethers.ContractFactory(
+            require('../artifacts/contracts/ClimbingNFT.sol/ClimbingNFT.json').abi,
+            require('../artifacts/contracts/ClimbingNFT.sol/ClimbingNFT.json').bytecode,
+            wallet
+        );
+        const nftContract = await nftFactory.deploy(wallet.address);
+        await nftContract.deployed();
+        console.log("ClimbingNFT 已部署到:", nftContract.address);
+
+        // 设置NFT合约地址
+        console.log("设置NFT合约地址...");
+        const tx = await contract.setNFTContract(nftContract.address);
+        await tx.wait();
+        console.log("NFT合约地址设置成功");
+
+        // 设置NFT基础URI
+        console.log("设置NFT基础URI...");
+        const setURITx = await nftContract.setBaseURI("https://climbing-reddio-api.vercel.app/api/metadata/");
+        await setURITx.wait();
+        console.log("NFT基础URI设置成功");
     } catch (error) {
         console.error("部署过程中出错:", error);
         console.error("错误详情:", error.message);

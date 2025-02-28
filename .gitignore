@@ -33,3 +33,19 @@ coverage.json
 typechain
 typechain-types
 
+# 工具脚本
+get-abi.js
+
+# 生成的 ABI 文件
+nft-contract-abi.json
+
+# 编辑器文件
+.vscode
+.idea
+*.swp
+*.swo
+
+# 构建文件
+dist
+build
+
