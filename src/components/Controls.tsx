@@ -230,7 +230,7 @@ const Controls: React.FC = () => {
             <LoadingSpinner /> Processing...
           </>
         ) : (
-          'Descend 50m (0.5 MON)'
+          'Descend 50m (0.5 $RED)'
         )}
       </Button>
     </ControlsContainer>
